@@ -25,6 +25,23 @@ function readProducts() {
       if (err) throw err;
       // Log all results of the SELECT statement
       console.log(res);
+      inquirer.prompt ([
+        {
+          type: "input",
+          name: "id",
+          message: "What is the id of the item you'd like to purchase?"
+        },
+        {
+          type: "input",
+          name: "quantity",
+          message: "How many units of this item would you like to purchase?"
+        }
+      ]).then(function(answers){
+        var itemId = parseFloat(answers.id);
+        console.log("Id selected: " + itemId);
+        var itemQuantity = parseFloat(answers.quantity);
+        console.log("You selected " + itemQuantity + " units for purchase");
+      })
       connection.end();
     });
 }
