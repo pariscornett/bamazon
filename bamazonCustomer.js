@@ -2,6 +2,10 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 
+//global variables
+var itemId;
+var itemQuantity;
+
 //set up connection parameters 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -41,7 +45,20 @@ function readProducts() {
         console.log("Id selected: " + itemId);
         var itemQuantity = parseFloat(answers.quantity);
         console.log("You selected " + itemQuantity + " units for purchase");
+        //runs function to check availability of product
+        checkQuantity();      
       })
-      connection.end();
     });
+}
+
+function checkQuantity () {
+  console.log("Checking availability...\n");
+  connection.query("SELECT stock_quantity FROM products WHERE item_id=10", function(err, res) {
+    if (err) throw (err);
+    console.log(res);
+    if ("stock_quantity" < itemQuantity) {
+      console.log("Insufficient Quantity!");
+    }
+    connection.end();
+  })
 }
