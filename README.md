@@ -1,5 +1,5 @@
 # bamazon
-A CLI application mimicking an online retailer's selection and stock processes. 
+A CLI application mimicking an online retailer's product selection and inventory processes. 
 
 ### Technologies used
 Node.js, mySQL, Inquirer
