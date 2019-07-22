@@ -53,20 +53,18 @@ function readProducts() {
           if(availability >= itemQuantity){
             console.log("Your order has been accepted!");
             var newQuantity = availability - itemQuantity;
-            // "UPDATE products SET stock_quantity=? WHERE user_id=?", [newQuantity], [itemId];
-            // console.log("\n\n Stock updated!");
-            // "SELECT * FROM products";
           }else{
             console.log("Sorry, we do not have enough of this item in stock to complete your order. There are only " + availability + " available");
+            connection.end();
+            return;
           };
           connection.query("UPDATE products SET stock_quantity=? WHERE item_id=?", [newQuantity, itemId], function(err, res){
             if(err) throw(err);
             console.log("\n\n Stock updated!");
-            console.log(res);
           });
-          connection.query("SELECT * FROM products", function(err, res){
-            console.log(res);
-          });
+          // connection.query("SELECT * FROM products", function(err, res){
+          //   console.log(res);
+          // });
           connection.end();
         })
       })
