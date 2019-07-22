@@ -62,9 +62,6 @@ function readProducts() {
             if(err) throw(err);
             console.log("\n\n Stock updated!");
           });
-          // connection.query("SELECT * FROM products", function(err, res){
-          //   console.log(res);
-          // });
           connection.end();
         })
       })
