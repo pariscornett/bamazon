@@ -48,20 +48,16 @@ function readProducts() {
         //runs function to check availability of product
         connection.query("SELECT stock_quantity FROM products WHERE item_id=?", [itemId], function(err, res){
           if(err)throw(err);
-          console.log(res);
+          var availability = res[0].stock_quantity;
+          //console.log(availability);
+          if(availability >= itemQuantity){
+            console.log("Your order has been accepted!");
+          }else{
+            console.log("Sorry, we do not have enough of this item in stock to complete your order. There are only " + availability + " available");
+          }
+          connection.end();
         })
       })
     });
 }
 
-// function checkQuantity () {
-//   console.log("Checking availability...\n");
-//   connection.query("SELECT stock_quantity FROM products WHERE item_id=?", ["itemId"], function(err, res) {
-//     if (err) throw (err);
-//     console.log(res);
-//     // if ("stock_quantity" < itemQuantity) {
-//     //   console.log("Insufficient Quantity!");
-//     // }
-//     connection.end();
-//   })
-// }
