@@ -46,19 +46,22 @@ function readProducts() {
         var itemQuantity = parseFloat(answers.quantity);
         console.log("You selected " + itemQuantity + " units for purchase");
         //runs function to check availability of product
-        checkQuantity();      
+        connection.query("SELECT stock_quantity FROM products WHERE item_id=?", [itemId], function(err, res){
+          if(err)throw(err);
+          console.log(res);
+        })
       })
     });
 }
 
-function checkQuantity () {
-  console.log("Checking availability...\n");
-  connection.query("SELECT stock_quantity FROM products WHERE item_id=10", function(err, res) {
-    if (err) throw (err);
-    console.log(res);
-    if ("stock_quantity" < itemQuantity) {
-      console.log("Insufficient Quantity!");
-    }
-    connection.end();
-  })
-}
+// function checkQuantity () {
+//   console.log("Checking availability...\n");
+//   connection.query("SELECT stock_quantity FROM products WHERE item_id=?", ["itemId"], function(err, res) {
+//     if (err) throw (err);
+//     console.log(res);
+//     // if ("stock_quantity" < itemQuantity) {
+//     //   console.log("Insufficient Quantity!");
+//     // }
+//     connection.end();
+//   })
+// }
