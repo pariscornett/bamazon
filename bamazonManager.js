@@ -61,6 +61,37 @@ function manage(){
 //function to view products
 function viewProducts(){
     console.log("\n Products currently available: \n");
+    connection.query("SELECT product_name FROM products", function(err, res){
+        if(err) throw(err);
+        for (i = 0; i < res.length; i++){
+            console.log(res[i].product_name);
+        };
+        inquirer.prompt([
+            {
+                type:"checkbox",
+                name: "options",
+                message: "Select an option: ",
+                choices: [
+                    {
+                        name: "Exit"
+                    },
+                    {
+                        name: "Return to main menu"
+                    }
+                ]
+            }
+        ]).then(function(selection){
+            var decision = selection.options;
+            console.log(decision);
+            if(decision == "Exit"){
+                console.log("Goodbye");
+                connection.end();
+                return;
+            }else{
+                manage();
+            }
+        })
+    });
 };
 
 //function to view low inventory
