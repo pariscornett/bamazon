@@ -82,7 +82,7 @@ function viewProducts(){
             }
         ]).then(function(selection){
             var decision = selection.options;
-            console.log(decision);
+            // console.log(decision);
             if(decision == "Exit"){
                 console.log("Goodbye");
                 connection.end();
@@ -97,6 +97,38 @@ function viewProducts(){
 //function to view low inventory
 function lowInventory(){
     console.log("\n These items are low in stock \n");
+    connection.query("SELECT product_name, stock_quantity FROM products WHERE stock_quantity<=10", function(err, res){
+        if (err) throw (err);
+        for (i = 0; i < res.length; i++){
+            console.log(res[i].stock_quantity + " units left of " + res[i].product_name);
+        };
+        inquirer.prompt([
+            {
+                type:"checkbox",
+                name: "options",
+                message: "Select an option: ",
+                choices: [
+                    {
+                        name: "Exit"
+                    },
+                    {
+                        name: "Return to main menu"
+                    }
+                ]
+            }
+        ]).then(function(selection){
+            var decision = selection.options;
+            // console.log(decision);
+            if(decision == "Exit"){
+                console.log("Goodbye");
+                connection.end();
+                return;
+            }else{
+                manage();
+            }
+        })
+        
+    })
 };
 
 //function to add inventory
